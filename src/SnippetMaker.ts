@@ -1,6 +1,6 @@
 import {promisify} from 'util';
 import {readFile, writeFile} from 'fs';
-import stripJsonComments from 'strip-json-comments';
+import * as stripJsonComments from 'strip-json-comments';
 import {TextEditor, window, languages, Selection} from 'vscode';
 
 import {getVSCodeUserPath} from './helpers';

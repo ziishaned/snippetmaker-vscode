@@ -58,6 +58,7 @@
     "prettier:write": "yarn run prettier:base -- --write \"src/**/*.{ts,tsx}\""
   },
   "devDependencies": {
+    "@types/strip-json-comments": "0.0.30",
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.18",
     "tslint": "^5.12.1",
