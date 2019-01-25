@@ -15,9 +15,10 @@ interface SnippetInfoInterface {
 
 export class SnippetMaker {
   private editor: TextEditor;
-  private snippetInfo: SnippetInfoInterface = {};
+  private snippetInfo: SnippetInfoInterface;
 
   public constructor() {
+    this.snippetInfo = <SnippetInfoInterface>{};
     this.editor = <TextEditor>window.activeTextEditor;
   }
 
