@@ -4,13 +4,37 @@
   "description": "Makes managing snippets easy in VS Code",
   "version": "0.0.2",
   "publisher": "ziishaned",
+  "author": {
+    "name": "Zeeshan Ahmad",
+    "email": "ziishaned@gmail.com",
+    "url": "https://github.com/ziishaned"
+  },
   "icon": "media/logo.png",
   "engines": {
     "vscode": "^1.30.0"
   },
+  "galleryBanner": {
+    "color": "#2d4794",
+    "theme": "dark"
+  },
+  "keywords": [
+    "snippets",
+    "make snippet"
+  ],
   "categories": [
     "Other"
   ],
+  "preview": false,
+  "license": "MIT",
+  "homepage": "https://github.com/ziishaned/snippetmaker-vscode",
+  "bugs": {
+    "url": "https://github.com/ziishaned/snippetmaker-vscode/issues",
+    "email": "ziishaned@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ziishaned/snippetmaker-vscode.git"
+  },
   "activationEvents": [
     "onCommand:snippetmaker.make_snippet"
   ],
