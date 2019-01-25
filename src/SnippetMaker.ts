@@ -14,40 +14,18 @@ interface SnippetInfoInterface {
 }
 
 export class SnippetMaker {
-  private snippetInfo: SnippetInfoInterface;
+  private editor: TextEditor;
+  private snippetInfo: SnippetInfoInterface = {};
 
-  public constructor() {}
+  public constructor() {
+    this.editor = <TextEditor>window.activeTextEditor;
+  }
 
   public createSnippet = async () => {
-    let editor = <TextEditor>window.activeTextEditor;
-    let selected = <Selection>editor.selection;
-
-    let snippetBody = <string>editor.document.getText(selected);
-
-    let listOfLanguages = await languages.getLanguages();
-
-    let snippetInfo = <SnippetInfoInterface>{
-      body: snippetBody.split("\n")
-    };
-    snippetInfo.lang = <string>await window.showQuickPick(listOfLanguages, {
-      placeHolder: editor.document.languageId
-    });
-
-    snippetInfo.name = <string>await window.showInputBox({
-      prompt: "Name"
-    });
-
-    snippetInfo.prefix = <string>await window.showInputBox({
-      prompt: "Trigger"
-    });
-
-    snippetInfo.description = <string>await window.showInputBox({
-      prompt: "Description"
-    });
+    this.setSnippetInfo();
 
     let snippetsPath = this.getSnippetsPath();
-
-    let snippetFilePath = `${snippetsPath}/${snippetInfo.lang}.json`;
+    let snippetFilePath = `${snippetsPath}/${this.snippetInfo.lang}.json`;
 
     let text = "{}";
     try {
@@ -62,14 +40,45 @@ export class SnippetMaker {
       await writeFileSync(snippetFilePath, "{}");
     }
 
-    let currentSnippets = JSON.parse(text);
-    currentSnippets[snippetInfo.name] = {
-      prefix: snippetInfo.prefix,
-      body: snippetInfo.body,
-      description: snippetInfo.description
+    let snippetFileText = JSON.parse(text);
+    snippetFileText[this.snippetInfo.name] = {
+      body: this.snippetInfo.body,
+      prefix: this.snippetInfo.prefix,
+      description: this.snippetInfo.description
     };
 
-    await writeFileSync(snippetFilePath, JSON.stringify(currentSnippets));
+    await writeFileSync(snippetFilePath, JSON.stringify(snippetFileText));
+  }
+
+  /**
+   * Get snippet information from user.
+   *
+   * @returns void
+   */
+  private setSnippetInfo = async (): Promise<void> => {
+    let snippetBody = this.selectedText();
+
+    this.snippetInfo.body = snippetBody.split("\n");
+
+    let listOfLanguages = await languages.getLanguages();
+    this.snippetInfo.lang = <string>await window.showQuickPick(
+      listOfLanguages,
+      {
+        placeHolder: this.editor.document.languageId
+      }
+    );
+
+    this.snippetInfo.name = <string>await window.showInputBox({
+      prompt: "Name"
+    });
+
+    this.snippetInfo.prefix = <string>await window.showInputBox({
+      prompt: "Trigger"
+    });
+
+    this.snippetInfo.description = <string>await window.showInputBox({
+      prompt: "Description"
+    });
   }
 
   /**
@@ -79,5 +88,16 @@ export class SnippetMaker {
    */
   private getSnippetsPath = (): string => {
     return "/Users/zeeshan/Library/Application Support/Code - Insiders/User/snippets";
+  }
+
+  /**
+   * Get selected text from active editor.
+   *
+   * @returns string
+   */
+  private selectedText = (): string => {
+    let selectedRegion = <Selection>this.editor.selection;
+
+    return this.editor.document.getText(selectedRegion);
   }
 }
