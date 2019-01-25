@@ -9,16 +9,10 @@ import {
 import { readFile, writeFile } from "fs";
 import { promisify } from "util";
 
+import { SnippetInfoInterface } from "./interfaces";
+
 const readFileSync = promisify(readFile);
 const writeFileSync = promisify(writeFile);
-
-interface SnippetInfoInterface {
-  lang: string;
-  name: string;
-  body: Array<string>;
-  prefix: string;
-  description: string;
-}
 
 export const activate = (context: ExtensionContext) => {
   let disposable = commands.registerCommand(
