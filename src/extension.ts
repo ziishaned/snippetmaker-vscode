@@ -50,11 +50,10 @@ export const activate = (context: ExtensionContext) => {
         prompt: "Description"
       });
 
-      let extensionPath = context.extensionPath;
+      let snippetsPath =
+        "/Users/zeeshan/Library/Application Support/Code - Insiders/User/snippets";
 
-      let snippetFilePath = `${extensionPath}/snippets/${
-        snippetInfo.lang
-      }.json`;
+      let snippetFilePath = `${snippetsPath}/${snippetInfo.lang}.json`;
 
       let text = "{}";
       try {
