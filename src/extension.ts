@@ -52,13 +52,13 @@ export const activate = (context: ExtensionContext) => {
 
       let extensionPath = context.extensionPath;
 
-      let snippetFileFile = `${extensionPath}/snippets/${
+      let snippetFilePath = `${extensionPath}/snippets/${
         snippetInfo.lang
       }.json`;
 
       let text = "{}";
       try {
-        text = await readFileSync(snippetFileFile, {
+        text = await readFileSync(snippetFilePath, {
           encoding: "utf8"
         });
       } catch (e) {
@@ -66,7 +66,7 @@ export const activate = (context: ExtensionContext) => {
           return;
         }
 
-        await writeFileSync(snippetFileFile, "{}");
+        await writeFileSync(snippetFilePath, "{}");
       }
 
       let currentSnippets = JSON.parse(text);
@@ -76,7 +76,7 @@ export const activate = (context: ExtensionContext) => {
         description: snippetInfo.description
       };
 
-      await writeFileSync(snippetFileFile, JSON.stringify(currentSnippets));
+      await writeFileSync(snippetFilePath, JSON.stringify(currentSnippets));
     }
   );
 
