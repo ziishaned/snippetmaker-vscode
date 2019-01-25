@@ -4,7 +4,7 @@
   "description": "Makes managing snippets easy in VS Code",
   "version": "0.0.1",
   "publisher": "ziishaned",
-  "icon": "media/logo-white.png",
+  "icon": "media/logo.png",
   "engines": {
     "vscode": "^1.30.0"
   },
