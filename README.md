@@ -23,6 +23,10 @@
     Makes snippets easily in VS Code.
 </p>
 
+<div align="center">
+    <img src="https://media.giphy.com/media/g0so7oPwRbOte4VsQb/giphy.gif" alt="Demo"/>
+</div>
+
 ## Features
 
 - Create snippets without digging into snippet file
