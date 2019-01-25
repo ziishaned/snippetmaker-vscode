@@ -2,7 +2,7 @@
   "name": "snippetmaker",
   "displayName": "Snippet Maker",
   "description": "Makes managing snippets easy in VS Code",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "ziishaned",
   "icon": "media/logo.png",
   "engines": {
