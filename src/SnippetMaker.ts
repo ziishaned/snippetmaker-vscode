@@ -25,7 +25,7 @@ export class SnippetMaker {
   }
 
   public createSnippet = async () => {
-    this.setSnippetInfo();
+    await this.setSnippetInfo();
 
     let snippetsPath = this.getSnippetsPath();
     let snippetFilePath = `${snippetsPath}/${this.snippetInfo.lang}.json`;
