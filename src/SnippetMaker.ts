@@ -1,5 +1,6 @@
 import {promisify} from 'util';
 import {readFile, writeFile} from 'fs';
+import stripJsonComments from 'strip-json-comments';
 import {TextEditor, window, languages, Selection} from 'vscode';
 
 import {getVSCodeUserPath} from './helpers';
@@ -44,7 +45,7 @@ export class SnippetMaker {
       await writeFileSync(snippetFilePath, '{}');
     }
 
-    let snippetFileText = JSON.parse(text);
+    let snippetFileText = JSON.parse(stripJsonComments(text));
     snippetFileText[this.snippetInfo.name] = {
       body: this.snippetInfo.body,
       prefix: this.snippetInfo.prefix,
@@ -89,8 +90,6 @@ export class SnippetMaker {
    */
   private getSnippetsPath = (): string => {
     let vscodeUserPath = getVSCodeUserPath();
-
-    console.log(vscodeUserPath);
 
     return `${vscodeUserPath}/snippets`;
   };

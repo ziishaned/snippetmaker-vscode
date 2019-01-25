@@ -2,7 +2,7 @@
   "name": "snippetmaker",
   "displayName": "Snippet Maker",
   "description": "Makes managing snippets easy in VS Code",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "ziishaned",
   "author": {
     "name": "Zeeshan Ahmad",
@@ -58,10 +58,13 @@
     "prettier:write": "yarn run prettier:base -- --write \"src/**/*.{ts,tsx}\""
   },
   "devDependencies": {
-    "typescript": "^3.1.4",
-    "vscode": "^1.1.25",
-    "tslint": "^5.8.0",
-    "@types/node": "^8.10.25",
-    "@types/mocha": "^2.2.42"
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.18",
+    "tslint": "^5.12.1",
+    "typescript": "^3.2.4",
+    "vscode": "^1.1.28"
+  },
+  "dependencies": {
+    "strip-json-comments": "^2.0.1"
   }
 }
