@@ -45,8 +45,7 @@ export class SnippetMaker {
       prompt: "Description"
     });
 
-    let snippetsPath =
-      "/Users/zeeshan/Library/Application Support/Code - Insiders/User/snippets";
+    let snippetsPath = this.getSnippetsPath();
 
     let snippetFilePath = `${snippetsPath}/${snippetInfo.lang}.json`;
 
@@ -71,5 +70,14 @@ export class SnippetMaker {
     };
 
     await writeFileSync(snippetFilePath, JSON.stringify(currentSnippets));
+  }
+
+  /**
+   * Get the user defined snippets path.
+   *
+   * @returns string
+   */
+  private getSnippetsPath = (): string => {
+    return "/Users/zeeshan/Library/Application Support/Code - Insiders/User/snippets";
   }
 }
