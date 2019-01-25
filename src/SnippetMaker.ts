@@ -37,6 +37,9 @@ export class SnippetMaker {
       });
     } catch (e) {
       if (e.code !== "ENOENT") {
+        window.showErrorMessage(
+          "Something went wrong while retrieving snippets."
+        );
         return;
       }
 
