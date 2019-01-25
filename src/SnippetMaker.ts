@@ -2,6 +2,8 @@ import { promisify } from "util";
 import { readFile, writeFile } from "fs";
 import { TextEditor, window, languages, Selection } from "vscode";
 
+import { getVSCodeUserPath } from "./helpers";
+
 const readFileSync = promisify(readFile);
 const writeFileSync = promisify(writeFile);
 
@@ -88,7 +90,9 @@ export class SnippetMaker {
    * @returns string
    */
   private getSnippetsPath = (): string => {
-    return "/Users/zeeshan/Library/Application Support/Code - Insiders/User/snippets";
+    let vscodeUserPath = getVSCodeUserPath();
+
+    return `${vscodeUserPath}/snippets`;
   }
 
   /**
