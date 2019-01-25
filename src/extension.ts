@@ -15,6 +15,8 @@ const writeFileSync = promisify(writeFile);
 interface SnippetInfoInterface {
   lang: string;
   name: string;
+  body: Array<string>;
+  prefix: string;
   description: string;
 }
 
@@ -25,16 +27,22 @@ export const activate = (context: ExtensionContext) => {
       let editor = <TextEditor>window.activeTextEditor;
       let selected = <Selection>editor.selection;
 
-      let selectedText = <string>editor.document.getText(selected);
+      let snippetBody = <string>editor.document.getText(selected);
 
       let listOfLanguages = await languages.getLanguages();
 
-      let snippetInfo = <SnippetInfoInterface>{};
+      let snippetInfo = <SnippetInfoInterface>{
+        body: snippetBody.split("\n")
+      };
       snippetInfo.lang = <string>await window.showQuickPick(listOfLanguages, {
         placeHolder: editor.document.languageId
       });
 
       snippetInfo.name = <string>await window.showInputBox({
+        prompt: "Name"
+      });
+
+      snippetInfo.prefix = <string>await window.showInputBox({
         prompt: "Trigger"
       });
 
@@ -48,7 +56,7 @@ export const activate = (context: ExtensionContext) => {
         snippetInfo.lang
       }.json`;
 
-      let text = "";
+      let text = "{}";
       try {
         text = await readFileSync(snippetFileFile, {
           encoding: "utf8"
@@ -58,8 +66,17 @@ export const activate = (context: ExtensionContext) => {
           return;
         }
 
-        await writeFileSync(snippetFileFile, "");
+        await writeFileSync(snippetFileFile, "{}");
       }
+
+      let currentSnippets = JSON.parse(text);
+      currentSnippets[snippetInfo.name] = {
+        prefix: snippetInfo.prefix,
+        body: snippetInfo.body,
+        description: snippetInfo.description
+      };
+
+      await writeFileSync(snippetFileFile, JSON.stringify(currentSnippets));
     }
   );
 
