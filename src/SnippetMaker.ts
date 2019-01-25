@@ -90,6 +90,8 @@ export class SnippetMaker {
   private getSnippetsPath = (): string => {
     let vscodeUserPath = getVSCodeUserPath();
 
+    console.log(vscodeUserPath);
+
     return `${vscodeUserPath}/snippets`;
   };
 
