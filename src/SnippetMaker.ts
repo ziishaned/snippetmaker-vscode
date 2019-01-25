@@ -1,8 +1,8 @@
-import { promisify } from "util";
-import { readFile, writeFile } from "fs";
-import { TextEditor, window, languages, Selection } from "vscode";
+import {promisify} from 'util';
+import {readFile, writeFile} from 'fs';
+import {TextEditor, window, languages, Selection} from 'vscode';
 
-import { getVSCodeUserPath } from "./helpers";
+import {getVSCodeUserPath} from './helpers';
 
 const readFileSync = promisify(readFile);
 const writeFileSync = promisify(writeFile);
@@ -30,31 +30,29 @@ export class SnippetMaker {
     let snippetsPath = this.getSnippetsPath();
     let snippetFilePath = `${snippetsPath}/${this.snippetInfo.lang}.json`;
 
-    let text = "{}";
+    let text = '{}';
     try {
       text = await readFileSync(snippetFilePath, {
-        encoding: "utf8"
+        encoding: 'utf8',
       });
     } catch (e) {
-      if (e.code !== "ENOENT") {
-        window.showErrorMessage(
-          "Something went wrong while retrieving snippets."
-        );
+      if (e.code !== 'ENOENT') {
+        window.showErrorMessage('Something went wrong while retrieving snippets.');
         return;
       }
 
-      await writeFileSync(snippetFilePath, "{}");
+      await writeFileSync(snippetFilePath, '{}');
     }
 
     let snippetFileText = JSON.parse(text);
     snippetFileText[this.snippetInfo.name] = {
       body: this.snippetInfo.body,
       prefix: this.snippetInfo.prefix,
-      description: this.snippetInfo.description
+      description: this.snippetInfo.description,
     };
 
     await writeFileSync(snippetFilePath, JSON.stringify(snippetFileText));
-  }
+  };
 
   /**
    * Get snippet information from user.
@@ -64,28 +62,25 @@ export class SnippetMaker {
   private setSnippetInfo = async (): Promise<void> => {
     let snippetBody = this.selectedText();
 
-    this.snippetInfo.body = snippetBody.split("\n");
+    this.snippetInfo.body = snippetBody.split('\n');
 
     let listOfLanguages = await languages.getLanguages();
-    this.snippetInfo.lang = <string>await window.showQuickPick(
-      listOfLanguages,
-      {
-        placeHolder: this.editor.document.languageId
-      }
-    );
+    this.snippetInfo.lang = <string>await window.showQuickPick(listOfLanguages, {
+      placeHolder: this.editor.document.languageId,
+    });
 
     this.snippetInfo.name = <string>await window.showInputBox({
-      prompt: "Name"
+      prompt: 'Name',
     });
 
     this.snippetInfo.prefix = <string>await window.showInputBox({
-      prompt: "Trigger"
+      prompt: 'Trigger',
     });
 
     this.snippetInfo.description = <string>await window.showInputBox({
-      prompt: "Description"
+      prompt: 'Description',
     });
-  }
+  };
 
   /**
    * Get the user defined snippets path.
@@ -96,7 +91,7 @@ export class SnippetMaker {
     let vscodeUserPath = getVSCodeUserPath();
 
     return `${vscodeUserPath}/snippets`;
-  }
+  };
 
   /**
    * Get selected text from active editor.
@@ -107,5 +102,5 @@ export class SnippetMaker {
     let selectedRegion = <Selection>this.editor.selection;
 
     return this.editor.document.getText(selectedRegion);
-  }
+  };
 }
