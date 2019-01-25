@@ -6,6 +6,11 @@ import {
   languages,
   Selection
 } from "vscode";
+import { readFile, writeFile } from "fs";
+import { promisify } from "util";
+
+const readFileSync = promisify(readFile);
+const writeFileSync = promisify(writeFile);
 
 interface SnippetInfoInterface {
   lang: string;
@@ -37,7 +42,24 @@ export const activate = (context: ExtensionContext) => {
         prompt: "Description"
       });
 
-      console.log(snippetInfo);
+      let extensionPath = context.extensionPath;
+
+      let snippetFileFile = `${extensionPath}/snippets/${
+        snippetInfo.lang
+      }.json`;
+
+      let text = "";
+      try {
+        text = await readFileSync(snippetFileFile, {
+          encoding: "utf8"
+        });
+      } catch (e) {
+        if (e.code !== "ENOENT") {
+          return;
+        }
+
+        await writeFileSync(snippetFileFile, "");
+      }
     }
   );
 
