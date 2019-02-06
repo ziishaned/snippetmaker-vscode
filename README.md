@@ -39,7 +39,7 @@ You can install the latest version of the extension via the Visual Studio Market
 Alternatively, open Visual Studio code, press `CTRL+P` or `CMD+P` and type:
 
 ```
-ext install snippetmaker
+ext install ziishaned.snippetmaker
 ```
 
 > Restart VS Code (if required)
